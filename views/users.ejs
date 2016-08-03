@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<title>Twitter App</title>
+<head>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <link rel="stylesheet" href="../stylesheets/style.css">
+    <link rel="stylesheet" href="../stylesheets/tweetstyle.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://code.angularjs.org/1.5.0-rc.2/angular-route.min.js"></script>
+    <script src="../angularjs/tweetapp.js"></script>
+    <script src="../angularjs/userpage.js"></script>
+  </head>
+
+<body ng-app="userpage" ng-controller="mainController">
+
+    <div id="header-bar" class="row" style="background-color: #b3e6ff" style="font-weight:bold" ;>
+        
+        <div id="home"class= "col-md-offset- col-sm-4" align="left">
+            <form action="/homepage" method="get">
+              <input type="submit" value="Home"  class="btn btn-success"/>
+            </form>        
+        </div> <!-- Close home div-->
+
+        <div id="icon" class= "col-md-offset-0 col-sm-4" align="center">
+          <img src="../twitter-128.png" width="40x" height="40px" />
+        </div> <!-- Close icon div-->
+
+        <div id="logout"class= "col-md-offset-0 col-sm-4" align="right">
+            <form action="/logout" method="post">
+              <input type="submit" value="Logout"  class="btn btn-success"/>
+            </form>        
+        </div> <!-- Close logout div--> 
+
+    </div>  <!-- Close header-bar  div-->
+    
+
+</br></br>
+    <div id="main-section" class="row" ;>
+        <div id="userprofile"class= "col-md-offset- col-sm-3" align="left">
+          <div class="well"><b><a href="/user/{{username}}}"></a></b></br></br>
+            <b>Tweets:</b> {{tweetcount}}</br></br>
+            <b>Following:</b> {{followingCount}}</br></br>
+            <b>Followers:</b> {{followerCount}}</br></br>         
+              <div ng-hide="buttons">
+                  <div id="following" ng-hide="followingbutton">
+                    <button ng-init="bname_1='Following'" type="submit" ng-mouseover="bname_1='Unfollow'" ng-mouseleave="bname_1='Following'" ng-click="unfollow();"> {{bname_1}}</Button>
+                  </div>
+                  <div id="follow" ng-hide="followbutton">
+                    <button ng-init= "bname_2='Follow'" type="submit" ng-click="follow();"> {{bname_2}}</Button>
+                  </div>
+              </div> <!-- end follow unfollow button section -->
+          </div> 
+
+        </div> <!-- Close userprofile  div--> 
+
+        <div id="tweetfeeds"class= "col-md-offset- col-sm-6" align="left">
+           <div id="tweet-stream">
+              <h4>Tweet Feed  {{search_result}}</h4>
+              <div class="tweet" ng-repeat="tweet in myTweets " ng-class-odd="'odd'" ng-class-even="'even'"> 
+                <p>{{tweet.tweet_text}}</p>   
+                <small>Tweeted by @<a href="/user/{{tweet.tweet_created_by}}">{{tweet.tweet_created_by}}</a> </small>
+                <small class="pull-right">{{tweet.tweet_created_at | date:"h:mma 'on' MMM d, y"}}</small>
+              </div>
+          </div>  <!-- Close tweet-stream div--> 
+        </div> <!-- Close tweet feed  div--> 
+
+        <div id="serachtweets"class= "col-md-offset- col-sm-3" align="left">
+          <form ng-Submit="searchTweets();">
+            <!-- <input required type="text" class="form-control" placeholder="Your name" ng-model="username" /> -->
+            <textarea required class="form-control" maxlength="40" rows="2" placeholder="Search tweets" ng-model="searchKeyword"></textarea>
+            <input class="btn submit-btn pull-right" type="submit" value="Search" /></br>
+        </form>
+        </div> <!-- Close search filed   div--> 
+    
+    </div> <!-- Close main-section  filed   div--> 
+
+  </body>
+</html>
